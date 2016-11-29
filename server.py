@@ -29,7 +29,8 @@ app = Flask(__name__)
 app.debug = True
 app.threaded = True
 app.config['SECRET_KEY'] = 'development key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/JP_Project' #'mysql://test_user:asease@localhost/hw2'#
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/JP_Project' #'mysql://test_user:asease@localhost/hw2'#
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/JP_Project' 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 socketio = SocketIO(app)
@@ -370,6 +371,6 @@ if __name__ == "__main__":
     checkAndSellOrder = threading.Thread(target=checkAndSell, args=(), name="checkAndSellDaemon")
     checkAndSellOrder.daemon = True
     checkAndSellOrder.start()
-    #app.run(debug=True, threaded=True)
-    socketio.run(app)
+    app.run(debug=True, threaded=True)
+    # socketio.run(app)
 
