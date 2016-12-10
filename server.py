@@ -316,8 +316,9 @@ def submitOrder():
         user = User.query.filter_by(uid=uid).first()
         items, process, remainingVolume,avgPrice = getOrderDetails(new_order.order_id)
         order_id = new_order.order_id
+        msg = "You've successfully submitted an order!"
         context = dict(user=user, items=items, process=process, remainingVolume=remainingVolume,\
-            itemsLen=len(items), order_id=order_id)
+            itemsLen=len(items), order_id=order_id,msg=msg)
         return render_template('orderDetails.html', **context)
     else:
         error = 'Please enter a positive integer for volume.'
