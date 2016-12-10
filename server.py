@@ -338,7 +338,7 @@ def getOrderDetails(order_id):
         if r.status == 0:
             executedVolume = executedVolume + r.volume
             totalPrice = totalPrice + r.price * r.volume
-    totalVolume = order.totalVolume
+    totalVolume = int(order.totalVolume)
     process = executedVolume * 100 / totalVolume
     remainingVolume = totalVolume - executedVolume
     if executedVolume != 0:
