@@ -47,6 +47,14 @@ class ServerTestCase(unittest.TestCase):
         rv = self.login('test','123')
         assert 'Oops! We cannot find this combination' in rv.data
 
+    def test_cancel_order(self):
+        self.login('test', '12345')
+        self.app.post('/submitOrder', data=dict(volume=50000), follow_redirects=True)
+        rv = self.app.post('/orderCancel', data=dict(order_id=120), follow_redirects=True)
+        assert 'Cancelled'
+        rv = self.app.post('/orderDetails', data=dict(order_id=120), follow_redirects=True)
+        assert 'Cancelled'
+
     def test_submit_order(self):
         self.login('test', '12345')
         rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
