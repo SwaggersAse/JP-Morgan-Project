@@ -73,8 +73,8 @@ class ServerTestCase(unittest.TestCase):
     def test_order_details(self):
         self.login('test_register','12345')
         assert 'Welcome' in rv.data
-        rv = self.app.post('/orderDetails',data=dict(order_id=98), follow_redirects=True)
-        assert '98' in rv.data
+        rv = self.app.post('/orderDetails',data=dict(order_id=1), follow_redirects=True)
+        assert '1' in rv.data
 
     def test_forgot_password(self):
         rv = self.app.post('/modifyPassword', data=dict(username='test_register', password='123456'), follow_redirects=True)
