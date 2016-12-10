@@ -6,7 +6,7 @@ python:
 install: pip install Flask-SQLAlchemy Flask MYSQL-python flask-socketio Flask-Table python-dateutil coverage
 
 before_script:
-- mysql -e "CREATE DATABASE JP_Project"
+- mysql -u root -e "CREATE DATABASE JP_Project"
 - sh -c "mysql -u root -e 'CREATE TABLE JP_Project.order (
     order_id int(11) NOT NULL PRIMARY KEY,
     totalVolume int(11) NOT NULL,
