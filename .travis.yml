@@ -28,6 +28,7 @@ before_script:
     'password' VARCHAR(45) NOT NULL,
     PRIMARY KEY (`uid`),
     );'"
+  - mysqlshow "JP_Project"
 
 # command to run tests
 script: 
