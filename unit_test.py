@@ -50,15 +50,14 @@ class ServerTestCase(unittest.TestCase):
     def test_cancel_order(self):
         self.login('test', '12345')
         self.app.post('/submitOrder', data=dict(volume=50000), follow_redirects=True)
-        rv = self.app.post('/orderCancel', data=dict(order_id=120), follow_redirects=True)
-        assert 'Cancelled'
-        rv = self.app.post('/orderDetails', data=dict(order_id=120), follow_redirects=True)
-        assert 'Cancelled'
+        rv = self.app.post('/orderCancel', data=dict(order_id=137), follow_redirects=True)
+        assert 'Cancelled' in rv.data
+
 
     def test_submit_order(self):
         self.login('test', '12345')
         rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
--       assert '5000' in rv.data
+        assert '5000' in rv.data
         #test nonpositive integer
         rv = self.app.post('/submitOrder', data=dict(volume='abc'), follow_redirects=True)
         assert 'positive integer' in rv.data
