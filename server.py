@@ -357,7 +357,7 @@ def get_orders(uid):
 
 @app.route('/orderDetails', methods=['POST'])
 def orderDetails():
-    uid = session['uid']
+    uid = db.session['uid']
     user = User.query.filter_by(uid=uid).first()
     order_id = request.form['order_id']
     items, process, remainingVolume, avgPrice = getOrderDetails(order_id)
