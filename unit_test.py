@@ -49,9 +49,9 @@ class ServerTestCase(unittest.TestCase):
         assert 'Oops! We cannot find this combination' in rv.data
 
     def test_cancel_order(self):
-        self.login('test', '12345')
+        self.login('test_register', '12345')
         self.app.post('/submitOrder', data=dict(volume=50000), follow_redirects=True)
-        rv = self.app.post('/orderCancel', data=dict(order_id=137), follow_redirects=True)
+        rv = self.app.post('/orderCancel', data=dict(order_id=1), follow_redirects=True)
         assert 'Cancelled' in rv.data
 
 
