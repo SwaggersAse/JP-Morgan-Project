@@ -51,7 +51,7 @@ class ServerTestCase(unittest.TestCase):
     def test_cancel_order(self):
         rv = self.login('test_register', '12345')
         assert 'Welcome' in rv.data
-        self.app.post('/submitOrder', data=dict(volume=50000), follow_redirects=True)
+        self.app.post('/submitOrder', data=dict(volume=100), follow_redirects=True)
         rv = self.app.post('/orderCancel', data=dict(order_id=1), follow_redirects=True)
         assert 'Cancelled' in rv.data
 
@@ -73,6 +73,7 @@ class ServerTestCase(unittest.TestCase):
     def test_order_details(self):
         rv = self.login('test_register','12345')
         assert 'Welcome' in rv.data
+        self.app.post('/submitOrder', data=dict(volume=100), follow_redirects=True)
         rv = self.app.post('/orderDetails',data=dict(order_id=1), follow_redirects=True)
         assert '1' in rv.data
 
