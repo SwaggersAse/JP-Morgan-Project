@@ -1,0 +1,7 @@
+Human-executable script:
+1. User registration and login
+2. Go through order summary page
+3. Create a new order
+4. Show order updating and explain order split algorithm
+5. Go back to order summary page to show order cancellation functionality
+
