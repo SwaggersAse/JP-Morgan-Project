@@ -302,6 +302,7 @@ def submitOrder():
     volume = request.form['volume']
     if volume.isdigit() and int(volume) > 0 and int(volume) < 2147483647:
         quote = json.loads(urllib2.urlopen(QUERY.format(random.random())).read())
+        print(session)
         new_order = Order(volume, session['uid'], quote['timestamp'])
         db.session.add(new_order)
         # split order
