@@ -172,11 +172,6 @@ class Suborder(db.Model):
                 #sold order
                 self.status = 0
                 self.price = price
-            else:
-                #unsold order
-                print "Unfilled order"
-                self.status = 1
-                self.price = None
 
             self.time = order['timestamp']
 
