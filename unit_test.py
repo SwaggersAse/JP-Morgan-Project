@@ -58,7 +58,7 @@ class ServerTestCase(unittest.TestCase):
     def test_submit_order(self):
         self.login('test', '12345')
         rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
-        assert '5000' in rv.data
+-       assert '5000' in rv.data
         #test nonpositive integer
         rv = self.app.post('/submitOrder', data=dict(volume='abc'), follow_redirects=True)
         assert 'positive integer' in rv.data
@@ -75,7 +75,7 @@ class ServerTestCase(unittest.TestCase):
         assert '98' in rv.data
 
     def test_forgot_password(self):
-        rv = self.app.post('/modifyPassword', data=dict(username='test1', password='123456'), follow_redirects=True)
+        rv = self.app.post('/modifyPassword', data=dict(username='test_register', password='123456'), follow_redirects=True)
         assert 'successfully' in rv.data
         rv = self.app.post('/modifyPassword', data=dict(username='test_r', password='123456'), follow_redirects=True)
         assert 'Oops!' in rv.data
