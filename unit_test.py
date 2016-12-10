@@ -8,6 +8,7 @@ class ServerTestCase(unittest.TestCase):
     def setUp(self):
      with server.app.app_context():
         self.db_fd, server.app.config['DATABASE'] = tempfile.mkstemp()
+        server.app.config['SECRET_KEY'] = 'development key'
         server.app.config['TESTING'] = True
         self.app = server.app.test_client()
         # server.init_db()
