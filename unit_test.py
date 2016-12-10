@@ -6,12 +6,12 @@ import tempfile
 class ServerTestCase(unittest.TestCase):
 
     def setUp(self):
-     with server.app.app_context():
-        self.db_fd, server.app.config['DATABASE'] = tempfile.mkstemp()
-        server.app.config['SECRET_KEY'] = 'development key'
-        server.app.config['TESTING'] = True
-        self.app = server.app.test_client()
-        # server.init_db()
+        with server.app.app_context():
+            self.db_fd, server.app.config['DATABASE'] = tempfile.mkstemp()
+            server.app.config['SECRET_KEY'] = 'development key'
+            server.app.config['TESTING'] = True
+            self.app = server.app.test_client()
+            # server.init_db()
 
     def tearDown(self):
         os.close(self.db_fd)
@@ -32,9 +32,9 @@ class ServerTestCase(unittest.TestCase):
         ), follow_redirects=True)
 
     def test_register(self):
-        rv=self.app.post('/register',data=dict(username='test_register8',password='12345'), follow_redirects=True)
-        assert 'successfully registered!' in rv.data
-        rv=self.app.post('/register',data=dict(username='test_register8',password='12345'), follow_redirects=True)
+        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
+        assert 'successfully registered' in rv.data
+        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         assert 'The username you typed is already used' in rv.data
         rv=self.app.post('/register',data=dict(username='test_abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',
                                                 password='12345'), follow_redirects=True)
@@ -49,17 +49,19 @@ class ServerTestCase(unittest.TestCase):
         assert 'Oops! We cannot find this combination' in rv.data
 
     def test_cancel_order(self):
-        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
-        rv = self.login('test_register', '12345')
+        rv=self.app.post('/register',data=dict(username='test_cancel',password='12345'), follow_redirects=True)
+        rv = self.login('test_cancel', '12345')
         assert 'Welcome' in rv.data
-        self.app.post('/submitOrder', data=dict(volume=100), follow_redirects=True)
+        rv = self.app.post('/submitOrder', data=dict(volume=100), follow_redirects=True)
+        print("in cancel order")
+        # print(rv) 
         rv = self.app.post('/orderCancel', data=dict(order_id=1), follow_redirects=True)
         assert 'Cancelled' in rv.data
 
+
     def test_submit_order(self):
-        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
-        rv = self.login('test_register', '12345')
-        assert 'Welcome' in rv.data
+        rv=self.app.post('/register',data=dict(username='test_submit_order',password='12345'), follow_redirects=True)
+        self.login('test_submit_order', '12345')
         rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
         assert '5000' in rv.data
         #test nonpositive integer
@@ -73,18 +75,18 @@ class ServerTestCase(unittest.TestCase):
         assert 'positive integer' in rv.data
 
     def test_order_details(self):
-        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
-        rv = self.login('test_register','12345')
-        assert 'Welcome' in rv.data
-        self.app.post('/submitOrder', data=dict(volume=100), follow_redirects=True)
+        rv=self.app.post('/register',data=dict(username='test_order_details',password='12345'), follow_redirects=True)
+        rv = self.login('test_order_details', '12345')
+        rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
         rv = self.app.post('/orderDetails',data=dict(order_id=1), follow_redirects=True)
-        print(rv)
+        assert '1' in rv.data
 
     def test_forgot_password(self):
         rv = self.app.post('/modifyPassword', data=dict(username='test_register', password='123456'), follow_redirects=True)
+        # print(rv.data)
         assert 'successfully' in rv.data
-        rv = self.app.post('/modifyPassword', data=dict(username='test_', password='123456'), follow_redirects=True)
-        assert 'cannot find' in rv.data
+        rv = self.app.post('/modifyPassword', data=dict(username='test_r', password='123456'), follow_redirects=True)
+        assert 'Oops!' in rv.data
 
 if __name__ == '__main__':
     unittest.main()

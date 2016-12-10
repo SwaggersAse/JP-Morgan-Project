@@ -37,7 +37,7 @@ app = Flask(__name__)
 app.debug = True
 app.threaded = True
 app.config['SECRET_KEY'] = 'development key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/JP_Project'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/JP_Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -320,6 +320,8 @@ def submitOrder():
         user = User.query.filter_by(uid=uid).first()
         items, process, remainingVolume,avgPrice = getOrderDetails(new_order.order_id)
         order_id = new_order.order_id
+        print("in submit ordder, order_id: " + str(order_id))
+        # session['order_id'] = order_id
         msg = "You've successfully submitted an order!"
         context = dict(user=user, items=items, process=process, remainingVolume=remainingVolume,\
             itemsLen=len(items), order_id=order_id,msg=msg)
