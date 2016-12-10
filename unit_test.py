@@ -49,6 +49,7 @@ class ServerTestCase(unittest.TestCase):
         assert 'Oops! We cannot find this combination' in rv.data
 
     def test_cancel_order(self):
+        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         rv = self.login('test_register', '12345')
         assert 'Welcome' in rv.data
         self.app.post('/submitOrder', data=dict(volume=100), follow_redirects=True)
@@ -56,6 +57,7 @@ class ServerTestCase(unittest.TestCase):
         assert 'Cancelled' in rv.data
 
     def test_submit_order(self):
+        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         rv = self.login('test_register', '12345')
         assert 'Welcome' in rv.data
         rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
@@ -71,6 +73,7 @@ class ServerTestCase(unittest.TestCase):
         assert 'positive integer' in rv.data
 
     def test_order_details(self):
+        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         rv = self.login('test_register','12345')
         assert 'Welcome' in rv.data
         self.app.post('/submitOrder', data=dict(volume=100), follow_redirects=True)
