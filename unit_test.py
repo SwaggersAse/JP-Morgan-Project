@@ -56,7 +56,7 @@ class ServerTestCase(unittest.TestCase):
         assert 'Cancelled' in rv.data
 
     def test_submit_order(self):
-        self.login('test_register', '12345')
+        rv = self.login('test_register', '12345')
         assert 'Welcome' in rv.data
         rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
         assert '5000' in rv.data
@@ -71,7 +71,7 @@ class ServerTestCase(unittest.TestCase):
         assert 'positive integer' in rv.data
 
     def test_order_details(self):
-        self.login('test_register','12345')
+        rv = self.login('test_register','12345')
         assert 'Welcome' in rv.data
         rv = self.app.post('/orderDetails',data=dict(order_id=1), follow_redirects=True)
         assert '1' in rv.data
