@@ -22,11 +22,10 @@ before_script:
     price decimal(5,2) DEFAULT NULL,
     order_id int(11) DEFAULT NULL
     );'"
- - sh -c "mysql -u root -e 'CREATE TABLE JP_Project.User (
-    'uid' INT(11) NOT NULL AUTO_INCREMENT,
-    'username' VARCHAR(45) NOT NULL,
-    'password' VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`uid`),
+ - sh -c "mysql -u root -e 'CREATE TABLE JP_Project.user (
+    uid int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(45) NOT NULL,
+    password VARCHAR(45) NOT NULL
     );'"
   - mysqlshow "JP_Project"
 
