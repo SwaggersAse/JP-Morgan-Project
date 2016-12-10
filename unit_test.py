@@ -54,7 +54,6 @@ class ServerTestCase(unittest.TestCase):
         rv = self.app.post('/orderCancel', data=dict(order_id=1), follow_redirects=True)
         assert 'Cancelled' in rv.data
 
-
     def test_submit_order(self):
         self.login('test_register', '12345')
         rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
@@ -77,8 +76,8 @@ class ServerTestCase(unittest.TestCase):
     def test_forgot_password(self):
         rv = self.app.post('/modifyPassword', data=dict(username='test_register', password='123456'), follow_redirects=True)
         assert 'successfully' in rv.data
-        rv = self.app.post('/modifyPassword', data=dict(username='test_r', password='123456'), follow_redirects=True)
-        assert 'Oops!' in rv.data
+        rv = self.app.post('/modifyPassword', data=dict(username='test_', password='123456'), follow_redirects=True)
+        assert 'cannot find' in rv.data
 
 if __name__ == '__main__':
     unittest.main()
