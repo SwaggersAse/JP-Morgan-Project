@@ -190,8 +190,8 @@ class SplitAlgorithm(object):
     @staticmethod
     def tw(order):
         numOfSlice = order.sliceNum
-        re = [order.totalVolume/numOfSlice] * (numOfSlice)
-        remind = order.totalVolume % numOfSlice
+        re = [int(order.totalVolume)/numOfSlice] * (numOfSlice)
+        remind = int(order.totalVolume) % numOfSlice
         for i in range(0, remind):
             re[i] = re[i] + 1
         suborderList = []
@@ -304,6 +304,7 @@ def submitOrder():
     volume = request.form['volume']
     if volume.isdigit() and int(volume) > 0 and int(volume) < 2147483647:
         quote = json.loads(urllib2.urlopen(QUERY.format(random.random())).read())
+        print("in submit order: " + str(session))
         new_order = Order(volume, session['uid'], quote['timestamp'])
         db.session.add(new_order)
         # split order
@@ -339,7 +340,7 @@ def getOrderDetails(order_id):
         if r.status == 0:
             executedVolume = executedVolume + r.volume
             totalPrice = totalPrice + r.price * r.volume
-    totalVolume = order.totalVolume
+    totalVolume = int(order.totalVolume)
     process = executedVolume * 100 / totalVolume
     remainingVolume = totalVolume - executedVolume
     if executedVolume != 0:
