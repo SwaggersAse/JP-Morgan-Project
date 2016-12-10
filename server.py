@@ -188,7 +188,7 @@ class SplitAlgorithm(object):
     def tw(order):
         numOfSlice = order.sliceNum
         re = [int(order.totalVolume)/numOfSlice] * (numOfSlice)
-        remind = order.totalVolume % numOfSlice
+        remind = int(order.totalVolume) % numOfSlice
         for i in range(0, remind):
             re[i] = re[i] + 1
         suborderList = []
