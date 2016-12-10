@@ -37,7 +37,7 @@ app = Flask(__name__)
 app.debug = True
 app.threaded = True
 app.config['SECRET_KEY'] = 'development key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/JP_Project'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/JP_Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 class User(db.Model):
@@ -357,7 +357,8 @@ def get_orders(uid):
 
 @app.route('/orderDetails', methods=['POST'])
 def orderDetails():
-    uid = db.session['uid']
+    uid = session['uid']
+    print(session)
     user = User.query.filter_by(uid=uid).first()
     order_id = request.form['order_id']
     items, process, remainingVolume, avgPrice = getOrderDetails(order_id)
