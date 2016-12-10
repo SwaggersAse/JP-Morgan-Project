@@ -275,6 +275,7 @@ def login():
             username=username, password=password).first()
         if user is not None:
             session['uid'] = user.uid
+            print("saved session here")
             submit = is_order_submit(user.uid)
             # print(submit)
             context = dict(user=user)
