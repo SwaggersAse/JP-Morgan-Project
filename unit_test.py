@@ -56,7 +56,7 @@ class ServerTestCase(unittest.TestCase):
 
 
     def test_submit_order(self):
-        self.login('test', '12345')
+        self.login('test_register', '12345')
         rv = self.app.post('/submitOrder', data=dict(volume=5000), follow_redirects=True)
         assert '5000' in rv.data
         #test nonpositive integer
@@ -70,7 +70,7 @@ class ServerTestCase(unittest.TestCase):
         assert 'positive integer' in rv.data
 
     def test_order_details(self):
-        self.login('test','12345')
+        self.login('test_register','12345')
         rv = self.app.post('/orderDetails',data=dict(order_id=98), follow_redirects=True)
         assert '98' in rv.data
 
