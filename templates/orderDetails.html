@@ -71,11 +71,11 @@ Remaining Volume: {{remainingVolume}}<br>
             <tr> 
             <td>{{i+1}}</td>
             {% if not items[i].status %}
-                <td>Success</td>
+                <td><font color="green">Success</font></td>
             {% elif items[i].status == 3%}
-                <td>Cancled</td>
+                <td><font color="orange">Canceled</font></td>
             {% else %}
-                <td>Failed: Too big</td>
+                <td><font color="red">Failed: Too big</font></td>
             {% endif %}
             <td>{{items[i].time}}</td>
             <td>{{items[i].volume}}</td>

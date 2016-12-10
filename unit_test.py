@@ -30,10 +30,10 @@ class ServerTestCase(unittest.TestCase):
         ), follow_redirects=True)
 
     def test_register(self):
-        rv=self.app.post('/register',data=dict(username='test',password='12345'), follow_redirects=True)
-        assert 'The username you typed is already used' in rv.data
         rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         assert 'successfully registered' in rv.data
+        rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
+        assert 'The username you typed is already used' in rv.data
         rv=self.app.post('/register',data=dict(username='test_abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',
                                                 password='12345'), follow_redirects=True)
         assert 'The maximum length' in rv.data
