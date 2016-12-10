@@ -40,6 +40,7 @@ app.config['SECRET_KEY'] = 'development key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/JP_Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
 class User(db.Model):
     __tablename__ = 'User'
     uid = db.Column(db.Integer, primary_key=True)
@@ -77,6 +78,7 @@ class Order(db.Model):
             print "after sell"
             sys.stdout.flush()
             #Handle unsold order
+            """
             if sell == 1:
                 del self.suborderList[0]
                 numOfSlice = len(self.suborderList)
@@ -84,13 +86,14 @@ class Order(db.Model):
                 if numOfSlice == 0:
                     numOfSlice = 1
                 self.suborderList = SplitAlgorithm.tw(self)
+            """
             #Handle big order:
-            elif sell == 2:
+            if sell == 2:
                 self.sliceNum = self.sliceNum * 2
                 self.suborderList = SplitAlgorithm.tw(self)
                 print "new sliceNum = " + str(self.sliceNum)
                 continue
-
+            #handle sold order:
             elif sell == 3:
                 del self.suborderList[0]
                 continue
@@ -275,7 +278,6 @@ def login():
             username=username, password=password).first()
         if user is not None:
             session['uid'] = user.uid
-            print("saved session here")
             submit = is_order_submit(user.uid)
             # print(submit)
             context = dict(user=user)
@@ -459,6 +461,7 @@ def checkAndSell():
             orderAvailable = False
         time.sleep(1)
     print "stop check and sell order"
+
 
 if __name__ == "__main__":
     getPriceFromJP = threading.Thread(target=getPrice, args=(), name="getPriceDaemon")
