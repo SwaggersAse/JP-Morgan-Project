@@ -23,9 +23,9 @@ before_script:
     order_id int(11) DEFAULT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;'"
  - sh -c "mysql -u root -e 'CREATE TABLE JP_Project.User (
-    uid INT(11) NOT NULL AUTO_INCREMENT,
-    username VARCHAR(45) NOT NULL,
-    password VARCHAR(45) NOT NULL,
+    'uid' INT(11) NOT NULL AUTO_INCREMENT,
+    'username' VARCHAR(45) NOT NULL,
+    'password' VARCHAR(45) NOT NULL,
     PRIMARY KEY (`uid`),
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;'"
 
