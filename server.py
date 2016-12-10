@@ -39,9 +39,12 @@ app = Flask(__name__)
 app.debug = True
 app.threaded = True
 app.config['SECRET_KEY'] = 'development key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/JP_Project'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/JP_Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+db.create_all()
+db.session.commit()
+
 #socketio = SocketIO(app)
 
 class User(db.Model):
