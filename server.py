@@ -239,6 +239,7 @@ def index():
 
 @app.route('/loginpage')
 def loginPage():
+    db.create_all()
     return render_template("login.html")
 
 @app.route('/register', methods=['POST'])
