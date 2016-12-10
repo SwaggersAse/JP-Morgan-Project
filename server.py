@@ -33,17 +33,13 @@ orderLock = threading.Lock()
 
 ORDER_DISCOUNT = 5
 
-
-
 app = Flask(__name__)
 app.debug = True
 app.threaded = True
 app.config['SECRET_KEY'] = 'development key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/JP_Project'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/JP_Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-#socketio = SocketIO(app)
-
 class User(db.Model):
     __tablename__ = 'User'
     uid = db.Column(db.Integer, primary_key=True)
@@ -176,11 +172,6 @@ class Suborder(db.Model):
                 #sold order
                 self.status = 0
                 self.price = price
-            else:
-                #unsold order
-                print "Unfilled order"
-                self.status = 1
-                self.price = None
 
             self.time = order['timestamp']
 
@@ -215,6 +206,12 @@ class ItemTable(Table):
     price = Col('Price')
 
 new_order = Order(-1, -1, datetime.utcnow())
+db.create_all()
+db.session.commit()
+
+#socketio = SocketIO(app)
+
+
 
 # @socketio.on('my event')
 # def showPrice(msg):
@@ -236,6 +233,7 @@ def index():
 
 @app.route('/loginpage')
 def loginPage():
+    db.create_all()
     return render_template("login.html")
 
 @app.route('/register', methods=['POST'])
@@ -356,6 +354,7 @@ def get_orders(uid):
 @app.route('/orderDetails', methods=['POST'])
 def orderDetails():
     uid = session['uid']
+    print(session)
     user = User.query.filter_by(uid=uid).first()
     order_id = request.form['order_id']
     items, process, remainingVolume, avgPrice = getOrderDetails(order_id)

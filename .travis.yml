@@ -6,7 +6,28 @@ python:
 install: pip install Flask-SQLAlchemy Flask MYSQL-python flask-socketio Flask-Table python-dateutil coverage
 
 before_script:
-- mysql -e "CREATE DATABASE JP_Project"
+- mysql -u root -e "CREATE DATABASE JP_Project"
+- sh -c "mysql -u root -e 'CREATE TABLE JP_Project.order (
+    order_id int(11) NOT NULL PRIMARY KEY,
+    totalVolume int(11) NOT NULL,
+    uid int(11) NOT NULL,
+    time DATETIME DEFAULT NULL,
+    status int(11) DEFAULT 0
+    );'"
+ - sh -c "mysql -u root -e 'CREATE TABLE JP_Project.suborder (
+    suborder_id int(11) NOT NULL PRIMARY KEY,
+    status tinyint(4) NOT NULL,
+    time datetime DEFAULT NULL,
+    volume int(11) DEFAULT NULL,
+    price decimal(5,2) DEFAULT NULL,
+    order_id int(11) DEFAULT NULL
+    );'"
+ - sh -c "mysql -u root -e 'CREATE TABLE JP_Project.user (
+    uid int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(45) NOT NULL,
+    password VARCHAR(45) NOT NULL
+    );'"
+  - mysqlshow "JP_Project"
 
 # command to run tests
 script: 

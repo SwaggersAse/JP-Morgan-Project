@@ -10,6 +10,7 @@ class ServerTestCase(unittest.TestCase):
         self.db_fd, server.app.config['DATABASE'] = tempfile.mkstemp()
         server.app.config['TESTING'] = True
         self.app = server.app.test_client()
+        # server.init_db()
 
     def tearDown(self):
         os.close(self.db_fd)
@@ -45,6 +46,14 @@ class ServerTestCase(unittest.TestCase):
         #assert 'Welcome! This is main page' in rv.data
         rv = self.login('test','123')
         assert 'Oops! We cannot find this combination' in rv.data
+
+    def test_cancel_order(self):
+        self.login('test', '12345')
+        self.app.post('/submitOrder', data=dict(volume=50000), follow_redirects=True)
+        rv = self.app.post('/orderCancel', data=dict(order_id=120), follow_redirects=True)
+        assert 'Cancelled'
+        rv = self.app.post('/orderDetails', data=dict(order_id=120), follow_redirects=True)
+        assert 'Cancelled'
 
     def test_submit_order(self):
         self.login('test', '12345')
