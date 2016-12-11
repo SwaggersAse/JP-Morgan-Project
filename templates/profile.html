@@ -94,7 +94,7 @@ window.onload = timedRefresh(1000);
             <td>{{i[1]}}%</td>
             <td>{{i[0].totalVolume}}</td>
             <td>${{i[3]}}</td>
-            <td>{{i[0].time}}</td>
+            <td>{{i[0].realTime}}</td>
             <td><form action="/orderDetails" method="POST">
                 <button name="order_id" type="submit" value={{i[0].order_id}}> Details </button>
                 </form>
