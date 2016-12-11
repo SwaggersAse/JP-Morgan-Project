@@ -1,6 +1,6 @@
 System tests
 UI part:
-User click on Sign in/Register button on the top, and go to the loginpage
+User click on Sign in/Register button on the top, and go to the login page
 User click on Sign up, and enter the username and password.
 User click on log in button, and enter the username and the password that he or she just registered. System should take the user to the create order page.
 User enter the volume and click on submit order button.
@@ -15,5 +15,14 @@ The copy, excel, search button stopped working because of ajax. And we decided t
 
 
 Back-end part:
-User login with user_ID  = ‘test’ password = ‘12345’, submit an order with volume = 50000.
+User login with user_ID  = ‘test’ password = ‘12345’, submit an order with volume = 5000.
 User stay at the current page, wait for the ‘Progress’ keep updating till 100%
+User then click on the "User Profile" button, and go to the userProfile page. Varify that the status of the order is Success.
+User submit another order with volume = 50000. Then click on the "User Profile" button, and go to the userProfile page.
+User click the cancel button of this order. Varify that the status of the order is Cancelled.
+User stay submit an order with volume = 1000. Then log out immediately.
+Wait for 10 seconds, then login with user_ID  = ‘test’ password = ‘12345’.
+Varify that the status of the order is Success.
+Issues we found:
+When a user log out, we notice that the order stop to be sold. Then we fixed this problem.
+
