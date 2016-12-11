@@ -1,0 +1,28 @@
+System tests
+UI part:
+User click on Sign in/Register button on the top, and go to the login page
+User click on Sign up, and enter the username and password.
+User click on log in button, and enter the username and the password that he or she just registered. System should take the user to the create order page.
+User enter the volume and click on submit order button.
+If the user enter empty volume and click on submit order button, the system should show a warning.
+User enter volume as 100, and click on submit order button. The system should take user to the order detail page.
+The order detail page should show a table of order history, which update automatically.
+If user click on the order summary button, the system should take user to the order summary page which should show a table of all the orders submitted by the user. This table would also update automatically. 
+In the order summary page, once an order is finished. The status column should show that it is successed and should change its to green.
+Issues we found:
+In the order detail page, we found out that the order detail table is not in the right order because we used the emulator's time to order instead of local time. Then we fixed this problem.
+The copy, excel, search button stopped working because of ajax. And we decided to stop supporting this functionality since it’s not part of the necessary functionality. Then we fixed this problem.
+
+
+Back-end part:
+User login with user_ID  = ‘test’ password = ‘12345’, submit an order with volume = 5000.
+User stay at the current page, wait for the ‘Progress’ keep updating till 100%
+User then click on the "User Profile" button, and go to the userProfile page. Varify that the status of the order is Success.
+User submit another order with volume = 50000. Then click on the "User Profile" button, and go to the userProfile page.
+User click the cancel button of this order. Varify that the status of the order is Cancelled.
+User stay submit an order with volume = 1000. Then log out immediately.
+Wait for 10 seconds, then login with user_ID  = ‘test’ password = ‘12345’.
+Varify that the status of the order is Success.
+Issues we found:
+When a user log out, we notice that the order stop to be sold. Then we fixed this problem.
+

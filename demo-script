@@ -1,8 +1,12 @@
 Human-executable script:
-1. User registration and login
-2. Go through order summary page
-3. Create a new order
-4. Show order updating and explain order split algorithm
-5. Go back to order summary page to show order cancellation functionality
+1. User registration: register a new username and password, then click register. The system should show that you successfully registered.
+2. If the user try to register the same username. The system should warn the user that the username is already being registered.
+3. User click on log in button, and enter the username and the password that he or she just registered. Because the new user does not have any order yet, the system should take the user to the create order page. If user forget the password, he or she can click on forget password button, and modify the password. 
+4. User enter the volume and click on submit order button.
+5. If the user enter empty volume and click on submit order button, the system should show a warning.
+6. User enter volume as 100, and click on submit order button. The system should take user to the order detail page. Show order updating and explain order split algorithm
+7. If user click on the order summary button, the system should take user to the order summary page which should show a table of all the orders submitted by the user. This table would also update automatically. 
+8. User can cancel the order that is in progress. Once user clicked the cancel button, the order status should change to cancelled. And the system should stop selling order. 
+9. User can logout while a order is currently being sold. If the user login again, he will notice that the order is still being sold and was not affected by user's logout.
 Demo code tag: demo
 Github version 5292d44
