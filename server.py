@@ -58,15 +58,18 @@ class Order(db.Model):
     totalVolume = db.Column(db.String(64))
     uid = db.Column(db.Integer)#, db.ForeignKey('user.uid'))
     time = db.Column(db.DateTime)
+    realTime = db.Column(db.DateTime)
     status = db.Column(db.Integer)
     sliceNum = 5
     interval = 0
     suborderList = []
 
-    def __init__(self, totalVolume, uid, curtime):
+    def __init__(self, totalVolume, uid, curtime, realtime):
         self.time = curtime
+        self.realTime = realtime
         self.totalVolume = totalVolume
         self.uid = uid
+
     def sellOrder(self):
         global cancel
         print self.uid
@@ -305,7 +308,7 @@ def submitOrder():
     if volume.isdigit() and int(volume) > 0 and int(volume) < 2147483647:
         quote = json.loads(urllib2.urlopen(QUERY.format(random.random())).read())
         print("in submit order: " + str(session))
-        new_order = Order(volume, session['uid'], quote['timestamp'])
+        new_order = Order(volume, session['uid'], quote['timestamp'], time.localtime())
         db.session.add(new_order)
         # split order
         # new_order.suborders = algo.two()
