@@ -17,10 +17,7 @@ import logging
 # exchange deadline
 #exchangeDead = " 17:00:00"
 #endTime = time.strftime("%Y-%m-%d", time.localtime()) + " 17:00:00";
-endTime = time.strftime("%Y-%m-%d", time.localtime())+ " " + \
-time.strftime("%H:%M:%S", time.localtime(time.time() + 20))
-endTime = time.mktime(time.strptime(endTime, "%Y-%m-%d %H:%M:%S"))
-
+endTime = 0
 
 # Server API URLs
 QUERY = "http://localhost:8080/query?id={}"
@@ -38,13 +35,13 @@ app = Flask(__name__)
 app.debug = True
 app.threaded = True
 app.config['SECRET_KEY'] = 'development key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/JP_Project'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/JP_Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-handler = logging.FileHandler('hello.log')
+handler = logging.FileHandler('syslog.log')
 handler.setLevel(logging.INFO)
  
 # create a logging format
@@ -54,7 +51,7 @@ handler.setFormatter(formatter)
 # add the handlers to the logger
 logger.addHandler(handler)
  
-logger.info('First Log!')
+logger.info('Log start!')
 
 class User(db.Model):
     __tablename__ = 'User'
@@ -91,7 +88,7 @@ class Order(db.Model):
         print "in sellOrder"
         print len(self.suborderList)
         sys.stdout.flush()
-        #logger.debug('sell order No.%d', self.order_id)
+        logger.debug('sell order No.%d', self.order_id)
         while len(self.suborderList):
             sell = self.suborderList[0].sell()
             print "after sell"
@@ -154,7 +151,7 @@ class Suborder(db.Model):
         self.price = price
         self.order_id = order_id
     def sell(self):
-        #logger.debug('sell Suborder of No.%d', self.order_id)
+        logger.debug('sell Suborder of No.%d', self.order_id)
         global curPrice
         global cancel
         # Attempt to execute a sell order.
@@ -209,7 +206,8 @@ Use an algorithm to split order
 class SplitAlgorithm(object):
     @staticmethod
     def tw(order):
-        #logger.debug('begin tw')
+        logger.debug('begin tw')
+        global endTime
         numOfSlice = order.sliceNum
         re = [int(order.totalVolume)/numOfSlice] * (numOfSlice)
         remind = int(order.totalVolume) % numOfSlice
@@ -218,9 +216,13 @@ class SplitAlgorithm(object):
         suborderList = []
         for i in range(0, numOfSlice):
             suborderList.append(Suborder(0, datetime.now(), re[i], 0, order.order_id))
-        order.interval = (endTime - time.localtime()) / numOfSlice
+
+        nowTime = time.strftime("%Y-%m-%d", time.localtime())+ " " + \
+        time.strftime("%H:%M:%S", time.localtime(time.time() + 20))
+        nowTime = time.mktime(time.strptime(nowTime, "%Y-%m-%d %H:%M:%S"))
+        order.interval = (endTime - nowTime) / numOfSlice
         print "interval = " + str(order.interval)
-        #logger.debug('divide into %d slices', numOfSlice)
+        logger.debug('divide into %d slices', numOfSlice)
         return suborderList
 
 
@@ -269,20 +271,20 @@ def register():
         error = 'The maximum length for username and password is 45 characters.'
         context = dict(error=error)
         return render_template("login.html", **context)
-        #logger.info('register fail with long name or password')
+        logger.info('register fail with long name or password')
     checkUser = User.query.filter_by(username=username).first()
     if checkUser is not None:
         error = 'The username you typed is already used. Please choose another one.'
         context = dict(error=error)
         return render_template("login.html", **context)
-        #logger.info('register fail with used name: %s', username)
+        logger.info('register fail with used name: %s', username)
     else:
         new_user = User(username, password)
         db.session.add(new_user)
         db.session.commit()
         msg = 'You\'ve successfully registered!'
         context = dict(msg=msg)
-        #logger.info('register success with used name: %s', username)
+        logger.info('register success with used name: %s', username)
         return render_template("login.html", **context)
 
 def is_order_submit(uid):
@@ -302,6 +304,7 @@ def login():
         user = User.query.filter_by(
             username=username, password=password).first()
         if user is not None:
+            logger.info('login success with user name: %s, password: %s', username, password)
             session['uid'] = user.uid
             submit = is_order_submit(user.uid)
             # print(submit)
@@ -313,6 +316,7 @@ def login():
                 return render_template("submitOrder.html")
                 # return redirect('/userProfile')
         else:
+            logger.info('login fail with user name: %s, password: %s', username, password)
             error = 'Oops! We cannot find this combination of \
             username and password in our database.'
             context = dict(error=error)
@@ -326,8 +330,12 @@ def createOrder():
 def submitOrder():
     global orderAvailable
     global new_order
+    global endTime
     volume = request.form['volume']
     if volume.isdigit() and int(volume) > 0 and int(volume) < 2147483647:
+        endTime = time.strftime("%Y-%m-%d", time.localtime())+ " " + \
+        time.strftime("%H:%M:%S", time.localtime(time.time() + 60))
+        endTime = time.mktime(time.strptime(endTime, "%Y-%m-%d %H:%M:%S"))
         quote = json.loads(urllib2.urlopen(QUERY.format(random.random())).read())
         print("in submit order: " + str(session))
         new_order = Order(volume, session['uid'], quote['timestamp'], datetime.now())
@@ -335,6 +343,7 @@ def submitOrder():
         # split order
         # new_order.suborders = algo.two()
         db.session.commit()
+        logger.debug('submit order NO. %d, volume = %d', new_order.order_id, volume)
         #times in which the order will be sold
         new_order.suborderList = SplitAlgorithm.tw(new_order)
         sys.stdout.flush()
@@ -352,6 +361,7 @@ def submitOrder():
             itemsLen=len(items), order_id=order_id,msg=msg)
         return render_template('orderDetails.html', **context)
     else:
+        logger.debug('submit order fail with volume = %d', volume)
         error = 'Please enter a positive integer for volume.'
         context = dict(error=error)
         return render_template("submitOrder.html", **context)
@@ -360,6 +370,7 @@ def getOrderDetails(order_id):
     """Based on the user_ID, get list of orders that belongs to user from the database
     expect output: list[dict(information_from_database)]"""
     order = Order.query.filter_by(order_id=order_id).first()
+    logger.info('get detail of order NO. %s', order_id)
     result = Suborder.query.filter_by(order_id=order_id).order_by(Suborder.time.desc()).all()
     executedVolume = 0
     totalPrice = 0
@@ -408,10 +419,13 @@ def ordercancel():
     user = User.query.filter_by(uid=uid).first()
     # now only one order need to be considered
     order_id = request.form['order_id']
+    logger.debug('cancel order NO. %d', order_id)
     order = Order.query.filter_by(order_id=order_id).first()
     if order is not None:
         order.status = 3
         db.session.commit()
+    else :
+        return redirect('/userProfile')
     if int(order_id) == int(new_order.order_id):
         orderAvailable = False
         cancel = True
@@ -443,6 +457,7 @@ def modifyPassword():
     password = request.form['password']
     user_query = User.query.filter_by(username=username).first()
     if user_query is None:
+        logger.info('modify password fail with user name: %s, password: %s', username, password)
         error = 'Oops! We cannot find this username in our database. \
         Make sure the username is registered.'
         context = dict(error=error)
@@ -450,12 +465,14 @@ def modifyPassword():
     else:
         user_query.password = password
         db.session.commit()
+        logger.debug('modify password success with user name: %s, password: %s', username, password)
         msg = 'You\'ve successfully changed your password!'
         context = dict(msg=msg)
         return render_template("login.html", **context)
 
 @app.route('/signout')
 def signout():
+    logger.info('uid: %s logout', session['uid'])
     session.pop('uid', None)
     return redirect('/')
 
