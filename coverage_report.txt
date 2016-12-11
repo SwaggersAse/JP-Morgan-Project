@@ -16,3 +16,5 @@ server.py                                                                       
 4.Name                                                                                 Stmts   Miss  Cover   Missing
 ------------------------------------------------------------------------------------------------------------------
 server.py                                                                            314     24    92%   64-65, 132-133, 140, 143, 152, 184-189, 269, 273-274, 322, 332, 404-406, 422-423, 443
+
+The reason why we cannot achieve 100% coverage is that there are some code in the this file cannot get executed while running unit tests.Specifically it is the code that can only be executed after an order is sold out. Because selling takes time and unit test program cannot wait untill it finishes, that code cannot get executed.
