@@ -10,6 +10,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, session, request, render_template, redirect
 from flask_table import Table, Col
 from datetime import datetime
+import logging
+
 
 
 # exchange deadline
@@ -18,7 +20,6 @@ from datetime import datetime
 endTime = time.strftime("%Y-%m-%d", time.localtime())+ " " + \
 time.strftime("%H:%M:%S", time.localtime(time.time() + 20))
 endTime = time.mktime(time.strptime(endTime, "%Y-%m-%d %H:%M:%S"))
-print endTime
 
 
 # Server API URLs
@@ -37,9 +38,23 @@ app = Flask(__name__)
 app.debug = True
 app.threaded = True
 app.config['SECRET_KEY'] = 'development key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/JP_Project'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/JP_Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+handler = logging.FileHandler('hello.log')
+handler.setLevel(logging.INFO)
+ 
+# create a logging format
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+ 
+# add the handlers to the logger
+logger.addHandler(handler)
+ 
+logger.info('First Log!')
 
 class User(db.Model):
     __tablename__ = 'User'
@@ -76,6 +91,7 @@ class Order(db.Model):
         print "in sellOrder"
         print len(self.suborderList)
         sys.stdout.flush()
+        #logger.debug('sell order No.%d', self.order_id)
         while len(self.suborderList):
             sell = self.suborderList[0].sell()
             print "after sell"
@@ -116,7 +132,7 @@ class Order(db.Model):
             #time.sleep(10)
             realInterval = self.interval
             if realInterval < 1:
-                realInterval = 5
+                realInterval = 1
             time.sleep(realInterval)
         cancel = False
 
@@ -138,6 +154,7 @@ class Suborder(db.Model):
         self.price = price
         self.order_id = order_id
     def sell(self):
+        #logger.debug('sell Suborder of No.%d', self.order_id)
         global curPrice
         global cancel
         # Attempt to execute a sell order.
@@ -192,6 +209,7 @@ Use an algorithm to split order
 class SplitAlgorithm(object):
     @staticmethod
     def tw(order):
+        #logger.debug('begin tw')
         numOfSlice = order.sliceNum
         re = [int(order.totalVolume)/numOfSlice] * (numOfSlice)
         remind = int(order.totalVolume) % numOfSlice
@@ -200,8 +218,9 @@ class SplitAlgorithm(object):
         suborderList = []
         for i in range(0, numOfSlice):
             suborderList.append(Suborder(0, datetime.now(), re[i], 0, order.order_id))
-        order.interval = (endTime - time.time()) / numOfSlice
+        order.interval = (endTime - time.localtime()) / numOfSlice
         print "interval = " + str(order.interval)
+        #logger.debug('divide into %d slices', numOfSlice)
         return suborderList
 
 
@@ -250,17 +269,20 @@ def register():
         error = 'The maximum length for username and password is 45 characters.'
         context = dict(error=error)
         return render_template("login.html", **context)
+        #logger.info('register fail with long name or password')
     checkUser = User.query.filter_by(username=username).first()
     if checkUser is not None:
         error = 'The username you typed is already used. Please choose another one.'
         context = dict(error=error)
         return render_template("login.html", **context)
+        #logger.info('register fail with used name: %s', username)
     else:
         new_user = User(username, password)
         db.session.add(new_user)
         db.session.commit()
         msg = 'You\'ve successfully registered!'
         context = dict(msg=msg)
+        #logger.info('register success with used name: %s', username)
         return render_template("login.html", **context)
 
 def is_order_submit(uid):
