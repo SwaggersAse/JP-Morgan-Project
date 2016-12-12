@@ -9,4 +9,4 @@ Human-executable script:
 8. User can cancel the order that is in progress. Once user clicked the cancel button, the order status should change to cancelled. And the system should stop selling order. 
 9. User can logout while a order is currently being sold. If the user login again, he will notice that the order is still being sold and was not affected by user's logout.
 Demo code tag: demo
-Github version 5292d44
+Github version 4e4f11606513555539f9178afcc6b2868ae4edf4
