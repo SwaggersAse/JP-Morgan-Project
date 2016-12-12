@@ -167,8 +167,8 @@ class Suborder(db.Model):
             print "order canceled."
             self.status = 3
             self.price = None
-            db.session.add(self)
-            db.session.commit()
+            quote = json.loads(urllib2.urlopen(QUERY.format(random.random())).read())
+            self.time = quote['timestamp']
             return self.status
 
         print "Executing 'sell' of {:,} @ {:,}".format(*order_args)
@@ -421,14 +421,13 @@ def ordercancel():
     order_id = request.form['order_id']
     logger.debug('cancel order NO. %d', order_id)
     order = Order.query.filter_by(order_id=order_id).first()
-    if order is not None:
-        order.status = 3
-        db.session.commit()
-    else :
-        return redirect('/userProfile')
-    if int(order_id) == int(new_order.order_id):
-        orderAvailable = False
-        cancel = True
+    if new_order.order_id is not None:
+        if order is not None:
+            order.status = 3
+            db.session.commit()
+        if int(order_id) == int(new_order.order_id):
+            orderAvailable = False
+            cancel = True
     return redirect('/userProfile')
 
 
@@ -438,6 +437,7 @@ def userProfile():
     user = User.query.filter_by(uid=uid).first()
     orders = get_orders(uid)
     new_orders = list()
+    orders = sorted(orders, cmp=lambda x,y : cmp(x.realTime, y.realTime), reverse=True)
     i = 1
     for order in orders:
         items, process, remainingVolume, avgPrice = getOrderDetails(order.order_id)
