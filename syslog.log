@@ -967,3 +967,28 @@
 2016-12-15 22:44:24,341 - server - INFO - get detail of order NO. 130
 2016-12-15 22:44:24,341 - server - INFO - get detail of order NO. 127
 2016-12-15 22:44:25,400 - server - INFO - get detail of order NO. 133
+2016-12-15 22:46:03,805 - server - INFO - Log start!
+2016-12-15 22:46:03,875 - server - INFO - login success with user name: test_cancel, password: 12345
+2016-12-15 22:46:03,891 - server - INFO - get detail of order NO. 131
+2016-12-15 22:46:03,891 - server - INFO - get detail of order NO. 128
+2016-12-15 22:46:03,891 - server - INFO - get detail of order NO. 125
+2016-12-15 22:46:05,010 - server - INFO - get detail of order NO. 134
+2016-12-15 22:46:05,026 - server - INFO - get detail of order NO. 134
+2016-12-15 22:46:05,042 - server - INFO - get detail of order NO. 131
+2016-12-15 22:46:05,042 - server - INFO - get detail of order NO. 128
+2016-12-15 22:46:05,042 - server - INFO - get detail of order NO. 125
+2016-12-15 22:46:05,062 - server - INFO - modify password fail with user name: test_r, password: 123456
+2016-12-15 22:46:05,079 - server - INFO - login success with user name: test_register, password: 12345
+2016-12-15 22:46:05,079 - server - INFO - uid: 26 logout
+2016-12-15 22:46:05,095 - server - INFO - login fail with user name: test, password: 123
+2016-12-15 22:46:05,095 - server - INFO - login success with user name: test_order_details, password: 12345
+2016-12-15 22:46:05,111 - server - INFO - get detail of order NO. 132
+2016-12-15 22:46:05,111 - server - INFO - get detail of order NO. 129
+2016-12-15 22:46:05,111 - server - INFO - get detail of order NO. 126
+2016-12-15 22:46:06,180 - server - INFO - get detail of order NO. 135
+2016-12-15 22:46:06,196 - server - INFO - get detail of order NO. 1
+2016-12-15 22:46:06,226 - server - INFO - login success with user name: test_submit_order, password: 12345
+2016-12-15 22:46:06,243 - server - INFO - get detail of order NO. 133
+2016-12-15 22:46:06,243 - server - INFO - get detail of order NO. 130
+2016-12-15 22:46:06,243 - server - INFO - get detail of order NO. 127
+2016-12-15 22:46:07,312 - server - INFO - get detail of order NO. 136
