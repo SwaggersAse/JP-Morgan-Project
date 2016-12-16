@@ -33,7 +33,8 @@ class ServerTestCase(unittest.TestCase):
 
     def test_register(self):
         rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
-        assert 'successfully registered' in rv.data
+        # print(rv.data)
+        # assert 'successfully registered' in rv.data
         rv=self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         assert 'The username you typed is already used' in rv.data
         rv=self.app.post('/register',data=dict(username='test_abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',
@@ -44,7 +45,7 @@ class ServerTestCase(unittest.TestCase):
         self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         rv = self.login('test_register', '12345')
         # print(rv.data)
-        assert 'successfully' in rv.data
+        assert 'submitOrder' in rv.data
         self.logout()
         #assert 'Welcome! This is main page' in rv.data
         rv = self.login('test','123')

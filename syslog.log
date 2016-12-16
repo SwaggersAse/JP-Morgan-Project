@@ -907,3 +907,63 @@
 2016-12-15 22:26:22,979 - server - INFO - login fail with user name: test_register, password: 12345
 2016-12-15 22:26:22,979 - server - INFO - login success with user name: test_order_details, password: 12345
 2016-12-15 22:26:23,009 - server - INFO - login success with user name: test_submit_order, password: 12345
+2016-12-15 22:38:43,197 - server - INFO - Log start!
+2016-12-15 22:38:43,256 - server - INFO - login success with user name: test_cancel, password: 12345
+2016-12-15 22:38:43,289 - server - INFO - modify password fail with user name: test_r, password: 123456
+2016-12-15 22:38:43,303 - server - INFO - login fail with user name: test_register, password: 12345
+2016-12-15 22:38:43,319 - server - INFO - login success with user name: test_order_details, password: 12345
+2016-12-15 22:38:43,341 - server - INFO - login success with user name: test_submit_order, password: 12345
+2016-12-15 22:40:03,653 - server - INFO - Log start!
+2016-12-15 22:40:03,714 - server - INFO - register success with used name: test_cancel
+2016-12-15 22:40:03,730 - server - INFO - login success with user name: test_cancel, password: 12345
+2016-12-15 22:40:05,486 - server - INFO - get detail of order NO. 125
+2016-12-15 22:40:05,517 - server - INFO - get detail of order NO. 125
+2016-12-15 22:40:05,552 - server - INFO - register success with used name: test_forgot_password
+2016-12-15 22:40:05,555 - server - INFO - modify password fail with user name: test_r, password: 123456
+2016-12-15 22:40:05,571 - server - INFO - register success with used name: test_register
+2016-12-15 22:40:05,571 - server - INFO - login success with user name: test_register, password: 12345
+2016-12-15 22:40:05,586 - server - INFO - register success with used name: test_order_details
+2016-12-15 22:40:05,602 - server - INFO - login success with user name: test_order_details, password: 12345
+2016-12-15 22:40:06,663 - server - INFO - get detail of order NO. 126
+2016-12-15 22:40:06,686 - server - INFO - get detail of order NO. 1
+2016-12-15 22:40:06,717 - server - INFO - register success with used name: test_submit_order
+2016-12-15 22:40:06,732 - server - INFO - login success with user name: test_submit_order, password: 12345
+2016-12-15 22:40:07,786 - server - INFO - get detail of order NO. 127
+2016-12-15 22:41:18,203 - server - INFO - Log start!
+2016-12-15 22:41:18,280 - server - INFO - login success with user name: test_cancel, password: 12345
+2016-12-15 22:41:18,301 - server - INFO - get detail of order NO. 125
+2016-12-15 22:41:19,400 - server - INFO - get detail of order NO. 128
+2016-12-15 22:41:19,420 - server - INFO - get detail of order NO. 128
+2016-12-15 22:41:19,420 - server - INFO - get detail of order NO. 125
+2016-12-15 22:41:19,434 - server - INFO - modify password fail with user name: test_r, password: 123456
+2016-12-15 22:41:19,450 - server - INFO - login success with user name: test_register, password: 12345
+2016-12-15 22:41:19,450 - server - INFO - uid: 26 logout
+2016-12-15 22:41:19,450 - server - INFO - login fail with user name: test, password: 123
+2016-12-15 22:41:19,467 - server - INFO - login success with user name: test_order_details, password: 12345
+2016-12-15 22:41:19,482 - server - INFO - get detail of order NO. 126
+2016-12-15 22:41:20,543 - server - INFO - get detail of order NO. 129
+2016-12-15 22:41:20,559 - server - INFO - get detail of order NO. 1
+2016-12-15 22:41:20,591 - server - INFO - login success with user name: test_submit_order, password: 12345
+2016-12-15 22:41:20,612 - server - INFO - get detail of order NO. 127
+2016-12-15 22:41:21,667 - server - INFO - get detail of order NO. 130
+2016-12-15 22:44:21,871 - server - INFO - Log start!
+2016-12-15 22:44:21,953 - server - INFO - login success with user name: test_cancel, password: 12345
+2016-12-15 22:44:21,954 - server - INFO - get detail of order NO. 128
+2016-12-15 22:44:21,954 - server - INFO - get detail of order NO. 125
+2016-12-15 22:44:23,108 - server - INFO - get detail of order NO. 131
+2016-12-15 22:44:23,140 - server - INFO - get detail of order NO. 131
+2016-12-15 22:44:23,140 - server - INFO - get detail of order NO. 128
+2016-12-15 22:44:23,140 - server - INFO - get detail of order NO. 125
+2016-12-15 22:44:23,161 - server - INFO - modify password fail with user name: test_r, password: 123456
+2016-12-15 22:44:23,161 - server - INFO - login success with user name: test_register, password: 12345
+2016-12-15 22:44:23,177 - server - INFO - uid: 26 logout
+2016-12-15 22:44:23,177 - server - INFO - login fail with user name: test, password: 123
+2016-12-15 22:44:23,193 - server - INFO - login success with user name: test_order_details, password: 12345
+2016-12-15 22:44:23,193 - server - INFO - get detail of order NO. 129
+2016-12-15 22:44:23,209 - server - INFO - get detail of order NO. 126
+2016-12-15 22:44:24,263 - server - INFO - get detail of order NO. 132
+2016-12-15 22:44:24,279 - server - INFO - get detail of order NO. 1
+2016-12-15 22:44:24,325 - server - INFO - login success with user name: test_submit_order, password: 12345
+2016-12-15 22:44:24,341 - server - INFO - get detail of order NO. 130
+2016-12-15 22:44:24,341 - server - INFO - get detail of order NO. 127
+2016-12-15 22:44:25,400 - server - INFO - get detail of order NO. 133
