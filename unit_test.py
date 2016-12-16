@@ -41,9 +41,10 @@ class ServerTestCase(unittest.TestCase):
         assert 'The maximum length' in rv.data
 
     def test_login_logout(self):
+        self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         rv = self.login('test_register', '12345')
         assert 'Welcome' in rv.data
-        rv = self.logout()
+        self.logout()
         #assert 'Welcome! This is main page' in rv.data
         rv = self.login('test','123')
         assert 'Oops! We cannot find this combination' in rv.data
