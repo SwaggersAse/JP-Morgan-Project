@@ -57,7 +57,7 @@ class ServerTestCase(unittest.TestCase):
         rv = self.login('test_cancel', '12345')
         rv = self.app.post('/submitOrder', data=dict(volume=100), follow_redirects=True)
         rv = self.app.post('/orderCancel', data=dict(order_id=1), follow_redirects=True)
-        print(rv.data)
+        # print(rv.data)
         assert 'Cancelled' in rv.data
 
 
