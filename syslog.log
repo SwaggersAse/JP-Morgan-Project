@@ -893,3 +893,17 @@
 2016-12-12 04:06:52,262 - __main__ - INFO - get detail of order NO. 140
 2016-12-12 04:06:52,282 - __main__ - INFO - get detail of order NO. 139
 2016-12-12 04:06:52,285 - __main__ - INFO - get detail of order NO. 138
+2016-12-15 22:22:31,865 - server - INFO - Log start!
+2016-12-15 22:24:15,565 - server - INFO - Log start!
+2016-12-15 22:24:15,865 - server - INFO - login success with user name: test_cancel, password: 12345
+2016-12-15 22:24:15,898 - server - INFO - register success with used name: test_forgot_password
+2016-12-15 22:24:15,913 - server - INFO - modify password fail with user name: test_r, password: 123456
+2016-12-15 22:24:15,913 - server - INFO - login fail with user name: test_register, password: 12345
+2016-12-15 22:24:15,928 - server - INFO - login success with user name: test_order_details, password: 12345
+2016-12-15 22:24:15,950 - server - INFO - login success with user name: test_submit_order, password: 12345
+2016-12-15 22:26:22,825 - server - INFO - Log start!
+2016-12-15 22:26:22,943 - server - INFO - login success with user name: test_cancel, password: 12345
+2016-12-15 22:26:22,963 - server - INFO - modify password fail with user name: test_r, password: 123456
+2016-12-15 22:26:22,979 - server - INFO - login fail with user name: test_register, password: 12345
+2016-12-15 22:26:22,979 - server - INFO - login success with user name: test_order_details, password: 12345
+2016-12-15 22:26:23,009 - server - INFO - login success with user name: test_submit_order, password: 12345

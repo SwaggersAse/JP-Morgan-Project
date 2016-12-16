@@ -43,11 +43,13 @@ class ServerTestCase(unittest.TestCase):
     def test_login_logout(self):
         self.app.post('/register',data=dict(username='test_register',password='12345'), follow_redirects=True)
         rv = self.login('test_register', '12345')
-        assert 'Welcome' in rv.data
+        # print(rv.data)
+        assert 'login success' in rv.data
         self.logout()
         #assert 'Welcome! This is main page' in rv.data
         rv = self.login('test','123')
-        assert 'Oops! We cannot find this combination' in rv.data
+        # print(rv.data)
+        assert 'login fail with user name' in rv.data
 
     def test_cancel_order(self):
         rv=self.app.post('/register',data=dict(username='test_cancel',password='12345'), follow_redirects=True)

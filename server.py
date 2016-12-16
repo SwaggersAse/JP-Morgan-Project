@@ -332,7 +332,7 @@ def submitOrder():
     global new_order
     global endTime
     volume = request.form['volume']
-    if volume.isdigit() and int(volume) > 0 and int(volume) < 2147483647:
+    if volume.isdigit() and int(volume) > 0 and int(volume) < 100000:
         endTime = time.strftime("%Y-%m-%d", time.localtime())+ " " + \
         time.strftime("%H:%M:%S", time.localtime(time.time() + 60))
         endTime = time.mktime(time.strptime(endTime, "%Y-%m-%d %H:%M:%S"))
